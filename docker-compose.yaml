@@ -39,9 +39,13 @@ networks:
       - "traefik.http.routers.bitwarden.rule=Host(`${BITWARDEN_URL}`)"
       - "traefik.http.routers.bitwarden.tls=true"
       - "traefik.http.routers.bitwarden.tls.certresolver=default"
+      - "traefik.http.routers.bitwarden-admin.rule=(Host(`bitvault.ddns.net`) && PathPrefix(`/admin/`))"
+      - "traefik.http.routers.bitwarden-admin.entrypoints=web"
+      - "traefik.http.middlewares.bitwarden-admin-ipwhitelist.ipwhitelist.sourcerange=192.168.100.184"
+      - "traefik.http.routers.bitwarden-admin.middlewares=bitwarden-admin-ipwhitelist"
+
       - "traefik.http.routers.bitwarden.middlewares=secHeaders@file"
       - "traefik.http.services.bitwarden.loadbalancer.server.port=80"
-      - "traefik.http.middlewares.test-ipwhitelist.ipwhitelist.sourcerange=192.168.0.0/16"
     environment:
       - "SIGNUPS_ALLOWED=${SIGNUPS_ALLOWED}"
       - "ADMIN_TOKEN=${ADMIN_TOKEN}"
