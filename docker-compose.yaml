@@ -34,7 +34,7 @@ services:
       - "traefik.http.routers.bitwarden-admin.tls=true"
       - "traefik.http.routers.bitwarden.tls.certresolver=default"
       - "traefik.http.routers.bitwarden-admin.tls.certresolver=default"
-#      - "traefik.http.middlewares.test-auth.basicauth.users=user:password" #hier mit htpsswd password-hash erzeugen
+      - "traefik.http.middlewares.test-auth.basicauth.users=user:password" #hier mit htpsswd password-hash erzeugen
       - "traefik.http.routers.bitwarden-admin.middlewares=test-auth"
       - "traefik.http.routers.bitwarden.middlewares=secHeaders@file"
       - "traefik.http.services.bitwarden.loadbalancer.server.port=80"
