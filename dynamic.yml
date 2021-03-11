@@ -30,7 +30,3 @@ http:
         customRequestHeaders:
           X-Frame-Options: "SAMEORIGIN"
         customFrameOptionsValue: "SAMEORIGIN"
-    test-ipwhitelist:
-      ipWhiteList:
-        sourceRange:
-          - "192.168.100.184"
