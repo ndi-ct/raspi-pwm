@@ -1,0 +1,52 @@
+---
+services:
+  traefik:
+    command: --log.level=info
+    image: traefik:2.3
+    container_name: traefik_staging
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./acme:/etc/traefik
+    networks:
+      - traefik_reverse_proxy
+      - default
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+
+  bitwarden:
+    image: bitwardenrs/server:1.19.0
+    container_name: bitwarden_staging
+    restart: unless-stopped
+    volumes:
+      - /var/docker/bitwarden:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.bitwarden-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.bitwarden-http.entrypoints=web"
+      - "traefik.http.routers.bitwarden-http.rule=Host(`${BITWARDEN_URL}`)"
+      - "traefik.http.routers.bitwarden-http.middlewares=bitwarden-https@docker"
+      - "traefik.http.routers.bitwarden.entrypoints=web-secure"
+      - "traefik.http.routers.bitwarden.rule=Host(`${BITWARDEN_URL}`)"
+      - "traefik.http.routers.bitwarden-admin.rule=Host(`${BITWARDEN_URL}`) && PathPrefix(`/admin`)"
+      - "traefik.http.routers.bitwarden.tls=true"
+      - "traefik.http.routers.bitwarden-admin.tls=true"
+      - "traefik.http.routers.bitwarden.tls.certresolver=default"
+      - "traefik.http.routers.bitwarden-admin.tls.certresolver=default"
+#      - "traefik.http.middlewares.test-auth.basicauth.users=user:password" #hier mit htpsswd password-hash erzeugen
+      - "traefik.http.routers.bitwarden-admin.middlewares=test-auth"
+      - "traefik.http.routers.bitwarden.middlewares=secHeaders@file"
+      - "traefik.http.services.bitwarden.loadbalancer.server.port=80"
+    environment:
+#      - "SIGNUPS_ALLOWED=${SIGNUPS_ALLOWED}"
+      - "ADMIN_TOKEN=${ADMIN_TOKEN}"
+    networks:
+      - traefik_reverse_proxy
+
+networks:
+  traefik_reverse_proxy:
+    external:
+      name: traefik_reverse_proxy
+  default:
+    driver: bridge
