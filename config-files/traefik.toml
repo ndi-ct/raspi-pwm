@@ -1,0 +1,25 @@
+[log]
+  level = "ERROR"
+
+[providers]
+  [providers.docker]
+    exposedByDefault = false
+    endpoint = "unix:///var/run/docker.sock"
+    network = "traefik_proxy"
+  [providers.file]
+    filename = "/etc/traefik/dynamic.yml"
+
+[api]
+  dashboard = true
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+  [entryPoints.web-secure]
+    address = ":443"
+
+[certificatesResolvers]
+  [certificatesResolvers.default.acme]
+    email = "mail@example.com" # Hier gültige Mail-Adresse eintragen
+    storage = "/etc/traefik/config-files/acme.json"
+    [certificatesResolvers.default.acme.tlsChallenge]
