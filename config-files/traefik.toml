@@ -21,5 +21,5 @@
 [certificatesResolvers]
   [certificatesResolvers.default.acme]
     email = "mail@example.com" # Hier gültige Mail-Adresse eintragen
-    storage = "/etc/traefik/config-files/acme.json"
+    storage = "/etc/traefik/acme.json"
     [certificatesResolvers.default.acme.tlsChallenge]
