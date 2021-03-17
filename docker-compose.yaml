@@ -3,7 +3,7 @@ services:
   traefik:
     command: --log.level=info
     image: traefik:2.3
-    container_name: traefik_staging
+    container_name: traefik
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./config-files:/etc/traefik
@@ -17,7 +17,7 @@ services:
 
   bitwarden:
     image: bitwardenrs/server:1.19.0
-    container_name: bitwarden_staging
+    container_name: bitwarden_rs
     restart: unless-stopped
     volumes:
       - /var/docker/bitwarden:/data
