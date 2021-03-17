@@ -6,7 +6,7 @@ services:
     container_name: traefik_staging
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./acme:/etc/traefik
+      - ./config-files:/etc/traefik
     networks:
       - traefik_reverse_proxy
       - default
