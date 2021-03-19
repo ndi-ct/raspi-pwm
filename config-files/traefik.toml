@@ -10,7 +10,7 @@
     filename = "/etc/traefik/dynamic.yml"
 
 [api]
-  dashboard = true
+  dashboard = false
 
 [entryPoints]
   [entryPoints.web]
