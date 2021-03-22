@@ -5,7 +5,7 @@
   [providers.docker]
     exposedByDefault = false
     endpoint = "unix:///var/run/docker.sock"
-    network = "traefik_proxy"
+    network = "traefik_reverse_proxy"
   [providers.file]
     filename = "/etc/traefik/dynamic.yml"
 
