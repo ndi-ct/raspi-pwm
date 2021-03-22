@@ -1,8 +1,8 @@
 ---
 services:
   traefik:
-    command: --log.level=info
-    image: traefik:2.3
+    command: --log.level=error
+    image: traefik:2.4
     container_name: traefik
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -29,15 +29,14 @@ services:
       - "traefik.http.routers.bitwarden-http.middlewares=bitwarden-https@docker"
       - "traefik.http.routers.bitwarden.entrypoints=web-secure"
       - "traefik.http.routers.bitwarden.rule=Host(`${BITWARDEN_URL}`)"
-      - "traefik.http.routers.bitwarden-admin.rule=Host(`${BITWARDEN_URL}`) && PathPrefix(`/admin`)"
       - "traefik.http.routers.bitwarden.tls=true"
+      - "traefik.http.routers.bitwarden.tls.certresolver=default"      
+      - "traefik.http.routers.bitwarden-admin.rule=Host(`${BITWARDEN_URL}`) && PathPrefix(`/admin`)"
       - "traefik.http.routers.bitwarden-admin.tls=true"
-      - "traefik.http.routers.bitwarden.tls.certresolver=default"
       - "traefik.http.routers.bitwarden-admin.tls.certresolver=default"
       - "traefik.http.middlewares.admin-auth.basicauth.users=user:password" #'user:password' ersetzen. 
       - "traefik.http.routers.bitwarden-admin.middlewares=admin-auth"
       - "traefik.http.routers.bitwarden.middlewares=secHeaders@file"
-      - "traefik.http.services.bitwarden.loadbalancer.server.port=80"
     environment:
       - "ADMIN_TOKEN=${ADMIN_TOKEN}"
     networks:
