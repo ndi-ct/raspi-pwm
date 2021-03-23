@@ -40,7 +40,7 @@ services:
       - "traefik.http.routers.bitwarden-admin.service=admin-panel"
       - "traefik.http.services.admin-panel.loadbalancer.server.port=80"
       - "traefik.http.routers.bitwarden-admin.tls.certresolver=default"
-      - "traefik.http.middlewares.admin-auth.basicauth.users=user:$$apr1$$WKS9Zrj0$$eioLsxj2QUMvOXEwNMcqa." #'user:password' ersetzen.
+      - "traefik.http.middlewares.admin-auth.basicauth.users=user:password" #'user:password' ersetzen.
       - "traefik.http.routers.bitwarden-admin.middlewares=admin-auth"
       - "traefik.http.routers.bitwarden-ui-https.middlewares=secHeaders@file"
       - "traefik.http.routers.bitwarden-websocket-https.rule=Host(`${BITWARDEN_URL}`) && Path(`/notifications/hub`)"
