@@ -34,7 +34,7 @@ services:
       - "traefik.http.routers.bitwarden-ui-http.middlewares=redirect-https"
       - "traefik.http.routers.bitwarden-ui-http.service=bitwarden-ui"
       - "traefik.http.services.bitwarden-ui.loadbalancer.server.port=80"
-      - "traefik.http.routers.bitwarden-admin.rule=Host(`${BITWARDEN_URL}`) && Path(`/admin`)"
+      - "traefik.http.routers.bitwarden-admin.rule=Host(`${BITWARDEN_URL}`) && PathPrefix(`/admin`)"
       - "traefik.http.routers.bitwarden-admin.entrypoints=web-secure"
       - "traefik.http.routers.bitwarden-admin.tls=true"
       - "traefik.http.routers.bitwarden-admin.service=admin-panel"
