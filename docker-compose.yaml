@@ -16,7 +16,7 @@ services:
     restart: unless-stopped
 
   bitwarden:
-    image: vaultwarden/server:1.22.1
+    image: vaultwarden/server:1.24.0
     container_name: vaultwarden
     restart: unless-stopped
     volumes:
